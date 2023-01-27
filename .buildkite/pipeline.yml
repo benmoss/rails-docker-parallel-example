@@ -14,7 +14,7 @@ steps:
             - name: compose
               image: buildkite/agent:latest
               volumeMounts:
-              - name: docker
+              - name: dind
                 mountPath: /var/run/docker
             volumes:
             - name: dind
