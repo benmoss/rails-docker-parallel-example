@@ -20,6 +20,6 @@ steps:
             - name: dind
               hostPath:
                 path: /var/run/dind/
-    parallelism: 20
+    parallelism: 1
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
