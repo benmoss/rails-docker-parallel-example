@@ -4,7 +4,6 @@ steps:
     artifact_paths: "log/**/*"
     env:
       RAILS_ENV: test
-      DOCKER_HOST: "unix://var/run/docker/docker.sock"
     plugins:
       - docker-compose#v3.9.0:
           run: app
@@ -15,7 +14,7 @@ steps:
               image: buildkite/agent:latest
               volumeMounts:
               - name: dind
-                mountPath: /var/run/docker
+                mountPath: /var/run/
             volumes:
             - name: dind
               hostPath:
