@@ -1,6 +1,5 @@
 steps:
   - name: ":rspec:"
-    command: "scripts/ci/parallel_specs.sh"
     artifact_paths: "log/**/*"
     env:
       RAILS_ENV: test
@@ -11,6 +10,7 @@ steps:
           podSpec:
             containers:
             - name: compose
+              command: ["scripts/ci/parallel_specs.sh"]
               image: buildkite/agent:latest
               volumeMounts:
               - name: dind
