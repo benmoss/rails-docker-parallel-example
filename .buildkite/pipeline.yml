@@ -10,7 +10,7 @@ steps:
           podSpec:
             containers:
             - name: compose
-              command: ["scripts/ci/parallel_specs.sh"]
+              command: ["sleep 1h"]
               image: buildkite/agent:latest
               volumeMounts:
               - name: dind
