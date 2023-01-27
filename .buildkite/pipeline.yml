@@ -4,9 +4,22 @@ steps:
     artifact_paths: "log/**/*"
     env:
       RAILS_ENV: test
+      DOCKER_HOST: "unix://var/run/docker/docker.sock"
     plugins:
       - docker-compose#v3.9.0:
           run: app
+      - kubernetes:
+          podSpec:
+            containers:
+            - name: compose
+              image: buildkite/agent:latest
+              volumeMounts:
+              - name: docker
+                mountPath: /var/run/docker
+            volumes:
+            - name: dind
+              hostPath:
+                path: /var/run/dind/
     parallelism: 20
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
