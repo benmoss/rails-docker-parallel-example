@@ -11,6 +11,7 @@ steps:
               env:
                 - name: DOCKER_HOST
                   value: tcp://docker:2375
+  - wait
   - name: ":rspec:"
     artifact_paths: "log/**/*"
     env:
