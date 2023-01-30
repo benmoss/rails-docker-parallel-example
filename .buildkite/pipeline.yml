@@ -1,8 +1,21 @@
 steps:
+  - label: ":docker: Build"
+    plugins:
+      - docker-compose#v4.9.0:
+          build: app
+      - kubernetes:
+          podSpec:
+            containers:
+            - name: build
+              image: buildkite/agent:latest
+              env:
+                - name: DOCKER_HOST
+                  value: tcp://docker:2375
   - name: ":rspec:"
     artifact_paths: "log/**/*"
     env:
       RAILS_ENV: test
+      BUILDKITE_PLUGIN_DOCKER_COMPOSE_REQUIRE_PREBUILD: true
     plugins:
       - docker-compose#v3.9.0:
           run: app
