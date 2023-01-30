@@ -10,15 +10,11 @@ steps:
           podSpec:
             containers:
             - name: compose
-              command: ["sleep 1h"]
+              command: [scripts/ci/parallel_specs.sh]
               image: buildkite/agent:latest
-              volumeMounts:
-              - name: dind
-                mountPath: /var/run/
-            volumes:
-            - name: dind
-              hostPath:
-                path: /var/run/dind/
+              env:
+                - name: DOCKER_HOST
+                  value: tcp://docker
     parallelism: 20
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE

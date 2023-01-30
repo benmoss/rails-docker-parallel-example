@@ -1,36 +1,35 @@
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
-  name: dind
+  name: docker
 spec:
-  updateStrategy:
-    type: RollingUpdate
   selector:
     matchLabels:
-      name:  dind
+      app: docker
   template:
     metadata:
       labels:
-        name: dind
+        app: docker
     spec:
       containers:
-      - name: dind
+      - name: docker
         image: docker:dind
         args:
           - dockerd
           - --storage-driver=overlay2
-          - -H unix:///var/run/dind/docker.sock
+          - -H tcp://0.0.0.0:2375
         securityContext:
           privileged: true
-        volumeMounts:
-        - name: varlibdocker
-          mountPath: /var/lib/docker
-        - name: rundind
-          mountPath: /var/run/dind
       terminationGracePeriodSeconds: 30
-      volumes:
-      - name: varlibdocker
-        emptyDir: {}
-      - name: rundind
-        hostPath:
-          path: /var/run/dind/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker
+spec:
+  selector:
+    app: docker
+  ports:
+  - port: 2375
+    protocol: TCP
+    targetPort: 2375
