@@ -11,6 +11,8 @@ steps:
               env:
                 - name: DOCKER_HOST
                   value: tcp://docker:2375
+    agents:
+      queue: $BUILDKITE_AGENT_META_DATA_QUEUE
   - wait
   - name: ":rspec:"
     artifact_paths: "log/**/*"
