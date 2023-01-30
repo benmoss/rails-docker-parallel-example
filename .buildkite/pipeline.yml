@@ -14,7 +14,7 @@ steps:
               image: buildkite/agent:latest
               env:
                 - name: DOCKER_HOST
-                  value: tcp://docker
+                  value: tcp://docker:2375
     parallelism: 20
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
