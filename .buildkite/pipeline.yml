@@ -3,7 +3,7 @@ steps:
     plugins:
       - docker-compose#v4.9.0:
           build: app
-          image-repository: ttl.sh/buildkite-rails
+          image-repository: kind-registry:5000
       - kubernetes:
           podSpec:
             containers:
