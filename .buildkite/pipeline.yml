@@ -8,6 +8,7 @@ steps:
           sidecars:
           - name: dind
             image: docker:dind
+            args: ["--insecure-registry kind-registry:5000"]
             securityContext:
               privileged: true
             volumeMounts:
@@ -38,6 +39,7 @@ steps:
           sidecars:
           - name: dind
             image: docker:dind
+            args: ["--insecure-registry kind-registry:5000"]
             securityContext:
               privileged: true
             volumeMounts:
