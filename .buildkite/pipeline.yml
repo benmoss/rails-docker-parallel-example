@@ -8,6 +8,8 @@ steps:
           sidecars:
           - name: dind
             image: docker:dind
+            securityContext:
+              privileged: true
           podSpec:
             containers:
             - name: build
@@ -27,6 +29,8 @@ steps:
           sidecars:
           - name: dind
             image: docker:dind
+            securityContext:
+              privileged: true
           podSpec:
             containers:
             - name: compose
