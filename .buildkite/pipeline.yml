@@ -5,13 +5,13 @@ steps:
           build: app
           image-repository: kind-registry:5000/rails
       - kubernetes:
+          sidecars:
+          - name: dind
+            image: docker/dind:latest
           podSpec:
             containers:
             - name: build
               image: buildkite/agent:latest
-              env:
-                - name: DOCKER_HOST
-                  value: tcp://docker:2375
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
   - wait
@@ -24,6 +24,9 @@ steps:
       - docker-compose#v3.9.0:
           run: app
       - kubernetes:
+          sidecars:
+          - name: dind
+            image: docker/dind:latest
           podSpec:
             containers:
             - name: compose
@@ -32,6 +35,6 @@ steps:
               env:
                 - name: DOCKER_HOST
                   value: tcp://docker:2375
-    parallelism: 20
+    parallelism: 5
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
