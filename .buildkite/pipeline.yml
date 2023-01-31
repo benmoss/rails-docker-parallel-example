@@ -21,8 +21,12 @@ steps:
               volumeMounts:
               - mountPath: /var/run
                 name: dind-socket
+              - mountPath: /var/lib/docker
+                name: dind-storage
             volumes:
             - name: dind-socket
+              emptyDir: {}
+            - name: dind-storage
               emptyDir: {}
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
@@ -53,8 +57,12 @@ steps:
               volumeMounts:
               - mountPath: /var/run
                 name: dind-socket
+              - mountPath: /var/lib/docker
+                name: dind-storage
             volumes:
             - name: dind-socket
+              emptyDir: {}
+            - name: dind-storage
               emptyDir: {}
     parallelism: 5
     agents:
