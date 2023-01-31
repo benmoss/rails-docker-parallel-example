@@ -10,10 +10,19 @@ steps:
             image: docker:dind
             securityContext:
               privileged: true
+            volumeMounts:
+            - mountPath: /var/run
+              name: dind-socket
           podSpec:
             containers:
             - name: build
               image: buildkite/agent:latest
+              volumeMounts:
+              - mountPath: /var/run
+                name: dind-socket
+            volumes:
+            - name: dind-socket
+              emptyDir: {}
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
   - wait
@@ -31,14 +40,20 @@ steps:
             image: docker:dind
             securityContext:
               privileged: true
+            volumeMounts:
+            - mountPath: /var/run
+              name: dind-socket
           podSpec:
             containers:
             - name: compose
               command: [scripts/ci/parallel_specs.sh]
               image: buildkite/agent:latest
-              env:
-                - name: DOCKER_HOST
-                  value: tcp://docker:2375
+              volumeMounts:
+              - mountPath: /var/run
+                name: dind-socket
+            volumes:
+            - name: dind-socket
+              emptyDir: {}
     parallelism: 5
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
