@@ -7,7 +7,7 @@ steps:
       - kubernetes:
           sidecars:
           - name: dind
-            image: docker/dind:latest
+            image: docker:dind
           podSpec:
             containers:
             - name: build
@@ -26,7 +26,7 @@ steps:
       - kubernetes:
           sidecars:
           - name: dind
-            image: docker/dind:latest
+            image: docker:dind
           podSpec:
             containers:
             - name: compose
