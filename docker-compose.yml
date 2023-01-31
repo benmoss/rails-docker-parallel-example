@@ -10,8 +10,8 @@ services:
     # This mounts the current Buildkite build into /app, ensuring any
     # generated files and artifacts are available to the buildkite-agent on
     # the host machine (outside of the Docker Container)
-    # volumes:
-    #   - "./:/app"
+    volumes:
+      - "./:/app"
     env_file:
       - ".env-sample"
     environment:
